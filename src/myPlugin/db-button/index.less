@@ -1,0 +1,60 @@
+.allColorFunc(@color: #fff, @borderColor: #fff, @rgbBorderColor: rgba(255, 255, 255, 1)) {
+  color: @color;
+  border-color: @borderColor;
+  background-color: @borderColor;
+  transition: all .2s;
+
+  &:hover,
+  &:focus {
+    color: @color;
+    background-color: @rgbBorderColor;
+    border-color: @rgbBorderColor;
+    transition: all .2s;
+  }
+}
+
+.db-btn-container {
+  display: inline-block;
+  margin-right: 10px;
+
+  button {
+    font-size: 14px;
+    min-height: 32px;
+    color: #333;
+    border: 1px solid #DCDFE6;
+    background-color: #fff;
+    outline: none;
+    padding: 0 12px;
+    box-sizing: border-box;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(48, 142, 240, .1);
+      color: #3B94F1;
+      border-color: #3B94F1;
+      transition: all .2s;
+    }
+  }
+
+  .success {
+    .allColorFunc(#fff, #19BE6B, rgba(25, 190, 107, .8)); //调用函数进行赋值
+  }
+
+  .warning {
+    .allColorFunc(#fff, #FF9900, rgba(255,153,0, .8)); //调用函数进行赋值
+  }
+
+  .error {
+    .allColorFunc(#fff, #ED4014, rgba(237,64,20, .8)); //调用函数进行赋值
+  }
+
+  .info {
+    .allColorFunc(#fff, #909399, rgba(144,147,153, .8)); //调用函数进行赋值
+  }
+  .primary {
+    .allColorFunc(#fff, #2D8CF0, rgba(45,140,240, .8)); //调用函数进行赋值
+  }
+}

@@ -1,0 +1,10 @@
+#####属性列表
+属性|类型|说明
+--|:--:|--
+type|String|按钮状态（success、warning、error、info）
+size|String|按钮大小（lg、middle、small）
+round|Boolean|是否为圆角按钮
+disabled|Boolean|是否禁用
+icon|String|图标名称
+iconSize|Number、String|图标大小
+iconColor|String|图标颜色
