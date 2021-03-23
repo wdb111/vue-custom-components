@@ -1,55 +1,81 @@
 <template>
-  <div class="app">
-    <h3>ElementUI+IviewUI：实践vue自定义组件</h3>
-    <p>自定义图标</p>
-    <db-icon type="db-user" state="success" size="50"></db-icon>
-    <db-icon type="db-user" state="warning" size="40"></db-icon>
-    <db-icon type="db-user" state="error" size="30"></db-icon>
-    <db-icon type="db-user" state="info"></db-icon>
-    <db-icon type="db-user" size="30" color="#EA00FF" custom="icondb-phone"></db-icon>
-    <hr />
-    <p>自定义按钮</p>
-    <db-button></db-button>
-    <db-button type="primary" size="lg" round disabled></db-button>
-    <db-button type="success" size="middle" icon="db-user" iconSize="16" iconColor="#fff">成功按钮</db-button>
-    <db-button type="warning" size="small" round></db-button>
-    <db-button type="error"></db-button>
-    <hr />
-    <p>消息提示</p>
-    <db-button @click.native="openMessage('success')">成功信息</db-button>
-    <db-button @click.native="openMessage('warning')">警告信息</db-button>
-    <db-button @click.native="openMessage('error')">失败信息</db-button>
-  </div>
+    <div class="app">
+        <h3>ElementUI+IviewUI：实践vue自定义组件</h3>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane :label="item.label" :name="item.name" v-for="(item,index) in navList" :key="index"></el-tab-pane>
+            
+        </el-tabs>
+        <component :is="componentName"></component>
+    </div>
 </template>
 
 <script>
-import dbIcon from "./myPlugin/db-icon/index.vue";
-import dbButton from "./myPlugin/db-button/index.vue";
+import dbIcon from "./components/icons/index.vue";
+import dbButton from "./components/buttons/index.vue";
+import dbTable from "./components/tables/index.vue";
+import dbMessage from "./components/messages/index.vue";
+import dbDialogForm from "./components/dialog-form/index.vue";
+import dbBatchAdd from './components/batch-add/index';
 export default {
-  data() {
-    return {};
-  },
-  components: {
-    dbIcon,
-    dbButton,
-  },
-  methods: {
-    openMessage(type) {
-      this.$dbMessage[type]({
-        content: "这是"+type+"信息",
-      });
+    data() {
+        return {
+            activeName:'dbIcon',
+            componentName: "dbIcon",
+           navList:[
+               {
+                   label:'自定义图标',
+                   name:'dbIcon'
+               },
+               {
+                   label:'自定义按钮',
+                   name:'dbButton'
+               },
+               {
+                   label:'信息提示',
+                   name:'dbMessage'
+               },
+               {
+                   label:'自定义表格',
+                   name:'dbTable'
+               },
+               {
+                   label:'添加表单',
+                   name:'dbDialogForm'
+               },
+                {
+                   label:'批量添加',
+                   name:'dbBatchAdd'
+               },
+           ]
+        };
     },
-  },
-  created() {},
+    components: {
+        dbIcon,
+        dbButton,
+        dbTable,
+        dbMessage,
+        dbDialogForm,
+        dbBatchAdd
+    },
+    methods: {
+        handleClick(tab) {
+            this.componentName=tab.name
+        },
+        
+        
+    },
+    created() {},
 };
 </script>
 
 <style scoped>
 .app {
-  height: 100%;
-  overflow-y: auto;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 h3 {
-  text-align: center;
+    text-align: center;
 }
 </style>
