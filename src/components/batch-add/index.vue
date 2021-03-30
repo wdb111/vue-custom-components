@@ -9,6 +9,7 @@
         <h1>IviewUI</h1>
         <Button type="primary" @click="openModal">打开批量添加弹窗</Button>
         <DbIveBatchAdd
+            modalTitle="批量添加内容"
             modalWidth="90%"
             ref="batchAdd"
             :formData="formData"
@@ -16,12 +17,12 @@
             @on-save-form="onSaveForm"
         >
             <!-- 插槽使用 -->
-            <!-- <template v-slot:sex="{ scope }">
+            <template v-slot:sex="{ scope }">
                 <i-switch v-model="scope.sex" true-value='1' false-value='0' false-color="#ff4949">
                     <span slot="open">男</span>
                     <span slot="close">女</span>
                 </i-switch>
-            </template> -->
+            </template>
         </DbIveBatchAdd>
         <br />
         <hr />
@@ -40,13 +41,15 @@ export default {
             titleList: [
                 {
                     title: "姓名",
-                    slot: "name",
+                    key:'name',
                 },
                 {
                     title: "年龄",
+                    key:'age',
                 },
                 {
                     title: "身高",
+                    key:'heigh',
                 },
                 {
                     title: "性别",
@@ -54,13 +57,14 @@ export default {
                 },
                 {
                     title: "地址",
+                    key:'dress',
                 },
             ],
             formData: {
                 name: "",
-                age: '',
+                age: "",
                 heigh: "",
-                sex: '',
+                sex: "",
                 dress: "",
             },
         };
