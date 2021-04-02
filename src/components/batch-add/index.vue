@@ -11,7 +11,7 @@
         <DbIveBatchAdd
             modalTitle="批量添加内容"
             modalWidth="90%"
-            ref="batchAdd"
+            ref="iveBatchAdd"
             :formData="formData"
             :titleList="titleList"
             @on-save-form="onSaveForm"
@@ -28,27 +28,64 @@
                     <span slot="close">女</span>
                 </i-switch>
             </template>
-            <template v-slot:action="{index}">
-                <Icon style="font-size:24px;cursor:pointer" type="md-trash" @click="onDeleteRow(index)" />
+            <template v-slot:action="{ index }">
+                <Icon
+                    style="font-size: 24px; cursor: pointer"
+                    type="md-trash"
+                    @click="onDeleteRow(index)"
+                />
             </template>
         </DbIveBatchAdd>
         <br />
         <hr />
+        <h1>ElementUI</h1>
+        <el-button type="primary" @click="openElModal"
+            >打开批量添加弹窗</el-button
+        >
+        <DbElBatchAdd
+            modalTitle="批量添加内容"
+            modalWidth="90%"
+            ref="elBatchAdd"
+            :formData="formData"
+            :titleList="titleList"
+            @on-save-form="onSaveForm"
+        >
+            <!-- 插槽使用 -->
+            <template v-slot:sex="{ row }">
+                <el-switch
+                    v-model="row.sex"
+                    active-value="1"
+                    inactive-value="0"
+                    inactive-color="#ff4949"
+                    active-text="男"
+                    inactive-text="女"
+                >
+                </el-switch>
+            </template>
+            <template v-slot:action="{ index }">
+                <i
+                    style="font-size: 24px; cursor: pointer"
+                    class="el-icon-delete"
+                    @click="onElDeleteRow(index)"
+                ></i>
+            </template>
+        </DbElBatchAdd>
     </div>
 </template>
 
 <script>
 import DbIveBatchAdd from "../../myPlugin/db-iv-batch-add/index";
+import DbElBatchAdd from "../../myPlugin/db-el-batch-add/index";
 export default {
     name: "BatchAdd",
     props: {},
-    components: { DbIveBatchAdd },
+    components: { DbIveBatchAdd, DbElBatchAdd },
     data() {
         return {
             value4: 0,
             titleList: [
                 {
-                     title: "ID",
+                    title: "ID",
                     type: "index",
                     width: 60,
                 },
@@ -93,8 +130,8 @@ export default {
                 heigh: "",
                 sex: "1",
                 dress: "",
-                aihao:"",
-                techang:''
+                aihao: "",
+                techang: "",
             },
         };
     },
@@ -105,11 +142,17 @@ export default {
         onSaveForm(form) {
             console.log(form);
         },
+        openElModal() {
+            this.$refs.elBatchAdd.openTheDialog();
+        },
+        onElDeleteRow(index) {
+            this.$refs.elBatchAdd.onDeleteRow(index);
+        },
         openModal() {
-            this.$refs.batchAdd.openTheDialog();
+            this.$refs.iveBatchAdd.openTheDialog();
         },
         onDeleteRow(index) {
-            this.$refs.batchAdd.onDeleteRow(index);
+            this.$refs.iveBatchAdd.onDeleteRow(index);
         },
     },
     created() {},

@@ -14,7 +14,6 @@ import dbIcon from "./components/icons/index.vue";
 import dbButton from "./components/buttons/index.vue";
 import dbTable from "./components/tables/index.vue";
 import dbMessage from "./components/messages/index.vue";
-import dbDialogForm from "./components/dialog-form/index.vue";
 import dbBatchAdd from './components/batch-add/index';
 export default {
     data() {
@@ -38,10 +37,6 @@ export default {
                    label:'自定义表格',
                    name:'dbTable'
                },
-               {
-                   label:'添加表单',
-                   name:'dbDialogForm'
-               },
                 {
                    label:'批量添加',
                    name:'dbBatchAdd'
@@ -54,7 +49,6 @@ export default {
         dbButton,
         dbTable,
         dbMessage,
-        dbDialogForm,
         dbBatchAdd
     },
     methods: {
