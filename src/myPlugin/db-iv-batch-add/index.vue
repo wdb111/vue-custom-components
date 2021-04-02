@@ -5,38 +5,59 @@
   版本：v1.0
 -->
 <template>
-    <div class="db-batch-add">
-        <Modal v-model="modal" :title="modalTitle" :width="modalWidth">
-            <div class="form-box">
-                <div class="title">
-                    <div>ID</div>
-                    <div v-for="(item, index) in titleList" :key="index">
-                        {{ item.title }}
-                    </div>
-                    <div>操作</div>
-                </div>
-                <div class="content">
-                    <div
-                        class="item"
-                        v-for="(row, index) in dataList"
-                        :key="index"
-                    >
-                        <div>{{ index + 1 }}</div>
-                        <div v-for="(citem, cindex) in titleList" :key="cindex">
-                            <slot :name="citem.slot" v-bind:scope="row">
-                                <Input
-                                    clearable
-                                    v-model="row[citem.key]"
-                                    placeholder="请输入"
-                                />
-                            </slot>
+    <div class="db-iv-batch-add">
+        <Modal
+            class-name="iv-datch-modal"
+            v-model="modal"
+            :title="modalTitle"
+            :width="modalWidth"
+        >
+            <div class="form-body">
+                <div class="form-box">
+                    <div class="title">
+                        <div
+                            class="item-div"
+                            :style="{ width: filterWidth(item, titleList) }"
+                            v-for="(item, index) in titleList"
+                            :key="index"
+                        >
+                            {{ item.title }}
                         </div>
-                        <div>
-                            <Icon type="md-trash" @click="onDeleteRow(index)" />
+                    </div>
+                    <div class="content">
+                        <div
+                            class="item"
+                            v-for="(row, index) in dataList"
+                            :key="index"
+                        >
+                            <div
+                                class="item-div"
+                                :style="{
+                                    width: filterWidth(citem, titleList),
+                                }"
+                                v-for="(citem, cindex) in titleList"
+                                :key="cindex"
+                            >
+                                <slot
+                                    :name="citem.slot"
+                                    v-bind="{ row, index }"
+                                >
+                                    <span v-if="citem.type === 'index'">
+                                        {{ index + 1 }}
+                                    </span>
+                                    <Input
+                                        v-else
+                                        clearable
+                                        v-model="row[citem.key]"
+                                        placeholder="请输入"
+                                    />
+                                </slot>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="batch-add-footer" slot="footer">
                 <span class="add-row" @click="onBatchAdd">
                     <Icon type="md-add-circle" @click="onBatchAdd" />
@@ -81,21 +102,45 @@ export default {
         };
     },
     filters: {},
-    computed: {},
+    computed: {
+        //设置元素宽度
+        filterWidth() {
+            return (item, list) => {
+                if (item.width) {
+                    return item.width + "px";
+                }
+                let allNum = list.length;
+                let arr = list.filter((l) => {
+                    return l.width !== undefined;
+                });
+                let num = allNum - arr.length;
+                let kownWidth = 0;
+                arr.forEach((a) => {
+                    kownWidth += a.width;
+                });
+                let width = `calc((100% - ${kownWidth}px)/${num} - 20px)`;
+                return width;
+            };
+        },
+    },
     watch: {},
     methods: {
+        //保存数据
         onSaveForm() {
             this.$emit("on-save-form", this.dataList);
             this.modal = false;
         },
+        //打开弹窗
         openTheDialog() {
             this.dataList = [];
             this.modal = true;
         },
+        //添加行
         onBatchAdd() {
             let obj = JSON.parse(JSON.stringify(this.formData));
             this.dataList.push(obj);
         },
+        //删除行
         onDeleteRow(index) {
             this.dataList.splice(index, 1);
         },
@@ -105,75 +150,9 @@ export default {
 };
 </script> 
 <style lang='less'>
-.form-box {
-    background-color: #eee;
-
-    .title,
-    .item {
-        display: flex;
-        justify-content: space-between;
-
-        div {
-            width: 170px;
-            height: 40px;
-            text-align: center;
-            line-height: 40px;
-            font-size: 14px;
-            color: #2c344d;
-            font-weight: 600;
-        }
-
-        & > div:first-child,
-        & > div:last-child {
-            width: 60px;
-        }
-    }
-
-    .content {
-        height: 515px;
-        overflow-y: auto;
-
-        .item {
-            margin: 10px 0;
-
-            div {
-                font-size: 14px;
-                font-weight: 100;
-            }
-
-            & > div:last-child {
-                font-size: 24px;
-                cursor: pointer;
-
-                i:hover {
-                    color: rgb(48, 112, 231);
-                }
-            }
-        }
-    }
-}
-.batch-add-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .add-row {
-        margin-right: 20px;
-        width: 120px;
-        height: 36px;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px dotted #2d8cf0;
-        border-radius: 50px;
-        cursor: pointer;
-        &:hover {
-            background-color: rgba(45, 140, 240, 0.1);
-            border-style: solid;
-        }
-        i {
-            font-size: 24px;
-            color: #2d8cf0;
-        }
+.iv-datch-modal {
+    .ivu-modal-body {
+        padding: 0;
     }
 }
 </style>

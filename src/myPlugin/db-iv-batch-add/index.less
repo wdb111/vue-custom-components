@@ -1,7 +1,78 @@
-.db-batch-add {
+.db-iv-batch-add {
   width: 100%;
   height: 100%;
+}
 
- 
+.form-body {
+  overflow: auto;
 
+  .form-box {
+    min-width: 1200px;
+    background-color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .title {
+      background-color: #eee;
+    }
+
+    .title,
+    .item {
+      display: flex;
+      justify-content: space-between;
+
+      .item-div {
+        width: 170px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 14px;
+        color: #2c344d;
+        font-weight: 600;
+      }
+    }
+
+    .content {
+      height: 515px;
+      overflow-y: auto;
+
+      .item {
+        margin: 10px 0;
+
+        .item-div {
+          width: 170px;
+          font-size: 14px;
+          font-weight: 100;
+        }
+      }
+    }
+  }
+}
+
+.batch-add-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .add-row {
+    margin-right: 20px;
+    width: 120px;
+    height: 36px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dotted #2d8cf0;
+    border-radius: 50px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(45, 140, 240, 0.1);
+      border-style: solid;
+    }
+
+    i {
+      font-size: 24px;
+      color: #2d8cf0;
+    }
+  }
 }

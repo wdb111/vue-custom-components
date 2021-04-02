@@ -17,11 +17,19 @@
             @on-save-form="onSaveForm"
         >
             <!-- 插槽使用 -->
-            <template v-slot:sex="{ scope }">
-                <i-switch v-model="scope.sex" true-value='1' false-value='0' false-color="#ff4949">
+            <template v-slot:sex="{ row }">
+                <i-switch
+                    v-model="row.sex"
+                    true-value="1"
+                    false-value="0"
+                    false-color="#ff4949"
+                >
                     <span slot="open">男</span>
                     <span slot="close">女</span>
                 </i-switch>
+            </template>
+            <template v-slot:action="{index}">
+                <Icon style="font-size:24px;cursor:pointer" type="md-trash" @click="onDeleteRow(index)" />
             </template>
         </DbIveBatchAdd>
         <br />
@@ -40,32 +48,53 @@ export default {
             value4: 0,
             titleList: [
                 {
+                     title: "ID",
+                    type: "index",
+                    width: 60,
+                },
+                {
                     title: "姓名",
-                    key:'name',
+                    key: "name",
                 },
                 {
                     title: "年龄",
-                    key:'age',
+                    key: "age",
                 },
                 {
                     title: "身高",
-                    key:'heigh',
+                    key: "heigh",
                 },
                 {
                     title: "性别",
                     slot: "sex",
+                    width: 80,
+                },
+                {
+                    title: "爱好",
+                    key: "aihao",
+                },
+                {
+                    title: "特长",
+                    key: "techang",
                 },
                 {
                     title: "地址",
-                    key:'dress',
+                    key: "dress",
+                },
+                {
+                    title: "操作",
+                    slot: "action",
+                    width: 60,
                 },
             ],
             formData: {
                 name: "",
                 age: "",
                 heigh: "",
-                sex: "",
+                sex: "1",
                 dress: "",
+                aihao:"",
+                techang:''
             },
         };
     },
@@ -78,6 +107,9 @@ export default {
         },
         openModal() {
             this.$refs.batchAdd.openTheDialog();
+        },
+        onDeleteRow(index) {
+            this.$refs.batchAdd.onDeleteRow(index);
         },
     },
     created() {},
