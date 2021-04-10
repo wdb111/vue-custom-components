@@ -7,14 +7,17 @@
 <template>
     <div>
         <h1>IviewUI</h1>
-        <Button type="primary" @click="openModal">打开批量添加弹窗</Button>
+        <div class="batch-add-footer" slot="footer">
+            <Button @click="onAddRowForIve" type="primary">
+                添加行
+            </Button>
+            <Button @click="onSaveFormForIve" type="primary">保 存</Button>
+        </div>
         <DbIveBatchAdd
-            modalTitle="批量添加内容"
-            modalWidth="90%"
             ref="iveBatchAdd"
             :formData="formData"
             :titleList="titleList"
-            @on-save-form="onSaveForm"
+            :height="280"
         >
             <!-- 插槽使用 -->
             <template v-slot:sex="{ row }">
@@ -32,23 +35,24 @@
                 <Icon
                     style="font-size: 24px; cursor: pointer"
                     type="md-trash"
-                    @click="onDeleteRow(index)"
+                    @click="onDeleteRowForIve(index)"
                 />
             </template>
         </DbIveBatchAdd>
         <br />
         <hr />
         <h1>ElementUI</h1>
-        <el-button type="primary" @click="openElModal"
-            >打开批量添加弹窗</el-button
-        >
+        <div class="batch-add-footer" slot="footer">
+            <el-button @click="onAddRowForEl" type="primary">
+                添加行
+            </el-button>
+            <el-button @click="onSaveFormForEl" type="primary">保 存</el-button>
+        </div>
         <DbElBatchAdd
-            modalTitle="批量添加内容"
-            modalWidth="90%"
             ref="elBatchAdd"
             :formData="formData"
             :titleList="titleList"
-            @on-save-form="onSaveForm"
+             :height="280"
         >
             <!-- 插槽使用 -->
             <template v-slot:sex="{ row }">
@@ -66,7 +70,7 @@
                 <i
                     style="font-size: 24px; cursor: pointer"
                     class="el-icon-delete"
-                    @click="onElDeleteRow(index)"
+                    @click="onDeleteRowForEl(index)"
                 ></i>
             </template>
         </DbElBatchAdd>
@@ -82,12 +86,12 @@ export default {
     components: { DbIveBatchAdd, DbElBatchAdd },
     data() {
         return {
-            value4: 0,
             titleList: [
                 {
                     title: "ID",
                     type: "index",
                     width: 60,
+                    fixed: "left",
                 },
                 {
                     title: "姓名",
@@ -104,7 +108,7 @@ export default {
                 {
                     title: "性别",
                     slot: "sex",
-                    width: 80,
+                    width: 100,
                 },
                 {
                     title: "爱好",
@@ -122,6 +126,7 @@ export default {
                     title: "操作",
                     slot: "action",
                     width: 60,
+                    fixed: "right",
                 },
             ],
             formData: {
@@ -139,20 +144,25 @@ export default {
     computed: {},
     watch: {},
     methods: {
-        onSaveForm(form) {
-            console.log(form);
+        onAddRowForIve() {
+            this.$refs.iveBatchAdd.onBatchAdd();
         },
-        openElModal() {
-            this.$refs.elBatchAdd.openTheDialog();
+        onSaveFormForIve() {
+            let data = this.$refs.iveBatchAdd.onSaveForm();
+            console.log(data);
         },
-        onElDeleteRow(index) {
-            this.$refs.elBatchAdd.onDeleteRow(index);
-        },
-        openModal() {
-            this.$refs.iveBatchAdd.openTheDialog();
-        },
-        onDeleteRow(index) {
+        onDeleteRowForIve(index) {
             this.$refs.iveBatchAdd.onDeleteRow(index);
+        },
+        onAddRowForEl() {
+            this.$refs.elBatchAdd.onBatchAdd();
+        },
+        onSaveFormForEl() {
+            let data = this.$refs.elBatchAdd.onSaveForm();
+            console.log(data);
+        },
+        onDeleteRowForEl(index) {
+            this.$refs.elBatchAdd.onDeleteRow(index);
         },
     },
     created() {},

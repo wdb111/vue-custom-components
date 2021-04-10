@@ -5,67 +5,57 @@
   版本：v1.0
 -->
 <template>
-    <div class="db-el-batch-add">
-        <el-dialog
-            custom-class="el-datch-modal"
-            :visible.sync="modal"
-            :title="modalTitle"
-            :width="modalWidth"
-        >
-            <div class="form-body">
-                <div class="form-box">
-                    <div class="title">
-                        <div
-                            class="item-div"
-                            :style="{ width: filterWidth(item, titleList) }"
-                            v-for="(item, index) in titleList"
+    <div
+        class="eltable-batch-add"
+        id="el-batch-add-id"
+        :style="{ height: filterHeight(height) }"
+    >
+        <table cellspacing="0">
+            <thead>
+                <tr>
+                    <template v-for="(item, index) in titleList">
+                        <th
+                            :class="[
+                                item.fixed ? 'th-fixed-' + item.fixed : '',
+                            ]"
+                            :style="{
+                                width: filterWidth(item, titleList),
+                            }"
                             :key="index"
                         >
                             {{ item.title }}
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div
-                            class="item"
-                            v-for="(row, index) in dataList"
-                            :key="index"
+                        </th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(row, index) in dataList" :key="index">
+                    <template v-for="(citem, cindex) in titleList">
+                        <td
+                            :class="[
+                                citem.fixed ? 'td-fixed-' + citem.fixed : '',
+                            ]"
+                            :style="{
+                                width: filterWidth(citem, titleList),
+                            }"
+                            :key="cindex"
                         >
-                            <div
-                                class="item-div"
-                                :style="{
-                                    width: filterWidth(citem, titleList),
-                                }"
-                                v-for="(citem, cindex) in titleList"
-                                :key="cindex"
-                            >
-                                <slot
-                                    :name="citem.slot"
-                                    v-bind="{ row, index }"
-                                >
-                                    <span v-if="citem.type === 'index'">
-                                        {{ index + 1 }}
-                                    </span>
-                                    <el-input
-                                        v-else
-                                        clearable
-                                        v-model="row[citem.key]"
-                                        placeholder="请输入"
-                                    ></el-input>
-                                </slot>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="batch-add-footer" slot="footer">
-                <span class="add-row" @click="onBatchAdd">
-                    <i class="el-icon-circle-plus" @click="onBatchAdd"></i>
-                    <span>添加行</span>
-                </span>
-                <el-button @click="onSaveForm" type="primary">保 存</el-button>
-            </div>
-        </el-dialog>
+                            <slot :name="citem.slot" v-bind="{ row, index }">
+                                <span v-if="citem.type === 'index'">
+                                    {{ index + 1 }}
+                                </span>
+                                <el-input
+                                    v-else
+                                    clearable
+                                    v-model="row[citem.key]"
+                                    placeholder="请输入"
+                                ></el-input>
+                            </slot>
+                        </td>
+                    </template>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -73,17 +63,9 @@
 export default {
     name: "dbBatchAdd",
     props: {
-        modalWidth: {
+        height: {
             type: [String, Number],
-            default: "60%",
-        },
-        modalTitle: {
-            type: String,
-            default: "批量添加",
-        },
-        cancelDoc: {
-            type: String,
-            default: "left",
+            default: 500,
         },
         formData: {
             type: Object,
@@ -97,12 +79,17 @@ export default {
     components: {},
     data() {
         return {
-            modal: false,
             dataList: [],
         };
     },
     filters: {},
     computed: {
+        //高度
+        filterHeight() {
+            return (val) => {
+                return val.toString().includes("px") ? val : val + "px";
+            };
+        },
         //设置元素宽度
         filterWidth() {
             return (item, list) => {
@@ -125,37 +112,28 @@ export default {
     },
     watch: {},
     methods: {
-        //保存数据
-        onSaveForm() {
-            this.$emit("on-save-form", this.dataList);
-            this.modal = false;
-        },
-        //打开弹窗
-        openTheDialog() {
-            this.dataList = [];
-            this.modal = true;
-        },
         //添加行
         onBatchAdd() {
             let obj = JSON.parse(JSON.stringify(this.formData));
             this.dataList.push(obj);
+            this.$nextTick(() => {
+                let div = document.getElementById("el-batch-add-id");
+                div.scrollTop = div.scrollHeight;
+            });
         },
         //删除行
         onDeleteRow(index) {
             this.dataList.splice(index, 1);
+        },
+        //保存数据
+        onSaveForm() {
+            return this.dataList;
         },
     },
     created() {},
     mounted() {},
 };
 </script> 
-<style lang='less'>
-.el-datch-modal {
-    .el-dialog__body {
-        padding: 0;
-    }
-}
-</style>
 <style lang='less' scoped>
 @import "./index.less";
 </style>

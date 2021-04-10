@@ -1,78 +1,63 @@
-.db-iv-batch-add {
+.ivetable-batch-add {
   width: 100%;
   height: 100%;
-}
-
-.form-body {
   overflow: auto;
+  border: 1px solid #eee;
 
-  .form-box {
-    min-width: 1200px;
-    background-color: #fff;
-    padding: 10px;
+  thead,
+  tr {
+    width: 100%;
+  }
+
+  td,
+  th {
+    border: none;
+    text-align: center;
+    padding: 8px;
     box-sizing: border-box;
-
-    .title {
-      background-color: #eee;
-    }
-
-    .title,
-    .item {
-      display: flex;
-      justify-content: space-between;
-
-      .item-div {
-        width: 170px;
-        height: 40px;
-        text-align: center;
-        line-height: 40px;
-        font-size: 14px;
-        color: #2c344d;
-        font-weight: 600;
-      }
-    }
-
-    .content {
-      height: 515px;
-      overflow-y: auto;
-
-      .item {
-        margin: 10px 0;
-
-        .item-div {
-          width: 170px;
-          font-size: 14px;
-          font-weight: 100;
-        }
-      }
-    }
   }
-}
 
-.batch-add-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .add-row {
-    margin-right: 20px;
-    width: 120px;
-    height: 36px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px dotted #2d8cf0;
-    border-radius: 50px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: rgba(45, 140, 240, 0.1);
-      border-style: solid;
-    }
-
-    i {
-      font-size: 24px;
-      color: #2d8cf0;
-    }
+  th {
+    height: 40px;
+    z-index: 1000;
+    background-color: #f8f8f9;
   }
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+    min-width: 1200px;
+  }
+
+  .th-fixed-left,
+  .td-fixed-left,
+  .th-fixed-right,
+  .td-fixed-right {
+    position: sticky;
+    left: 0;
+    z-index: 1001;
+    background-color: #fff;
+    border-right: 1px solid #eee;
+  }
+
+  .th-fixed-right,
+  .td-fixed-right {
+    right: 0;
+    border-left: 1px solid #eee;
+    border-right: none;
+  }
+
+  thead tr th {
+    position: sticky;
+    top: 0;
+  }
+
+  .th-fixed-right,
+  .th-fixed-left {
+    z-index: 1002;
+    background-color: #f8f8f9;
+  }
+
+
+
 }
