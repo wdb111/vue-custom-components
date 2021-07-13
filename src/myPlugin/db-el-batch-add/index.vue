@@ -56,6 +56,7 @@
                 </tr>
             </tbody>
         </table>
+        <el-empty v-if="dataList.length===0" style="height:calc(100% - 40px)" description="暂无数据"></el-empty>
     </div>
 </template>
 

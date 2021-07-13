@@ -1,0 +1,71 @@
+.db-carousel-container {
+  width: 300px;
+  height:200px;
+  overflow: hidden;
+  position: relative;
+
+  .l-foot-icon {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .l-foot-item {
+      margin: 0 5px;
+      width: 10px;
+      height: 10px;
+      background-color: #999;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .checedIcon {
+      background-color: #fff;
+    }
+  }
+}
+
+.d {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.show-enter-active {
+  animation: show 1.2s;
+}
+
+.show-leave-active {
+  animation: hide 1.2s;
+}
+
+.show-enter,
+.show-leave-to {
+  opacity: 0;
+}
+
+.wrap {
+  position: relative;
+}

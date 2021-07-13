@@ -56,6 +56,7 @@
                 </tr>
             </tbody>
         </table>
+        <div v-if="dataList.length===0" class="no-data">暂无数据</div>
     </div>
 </template>
 

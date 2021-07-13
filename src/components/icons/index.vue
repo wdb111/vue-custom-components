@@ -7,15 +7,15 @@
 <template>
     <div>
         <p>自定义图标</p>
-        <db-icon type="db-user" state="success" size="50"></db-icon>
-        <db-icon type="db-user" state="warning" size="40"></db-icon>
-        <db-icon type="db-user" state="error" size="30"></db-icon>
-        <db-icon type="db-user" state="info"></db-icon>
+        <db-icon type="icon-yanse1" state="success" size="50"></db-icon>
+        <db-icon type="icon-yanse1" state="warning" size="40"></db-icon>
+        <db-icon type="icon-yanse1" state="error" size="30"></db-icon>
+        <db-icon type="icon-yanse1" state="info"></db-icon>
         <db-icon
-            type="db-user"
+            type="icon-yanse1"
             size="30"
             color="#EA00FF"
-            custom="icondb-phone"
+            custom="icon-biaoqiankuozhan_wode-315"
         ></db-icon>
     </div>
 </template>

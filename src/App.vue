@@ -3,7 +3,6 @@
         <h3>ElementUI+IviewUI：实践vue自定义组件</h3>
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane :label="item.label" :name="item.name" v-for="(item,index) in navList" :key="index"></el-tab-pane>
-            
         </el-tabs>
         <component :is="componentName"></component>
     </div>
@@ -15,6 +14,9 @@ import dbButton from "./components/buttons/index.vue";
 import dbTable from "./components/tables/index.vue";
 import dbMessage from "./components/messages/index.vue";
 import dbBatchAdd from './components/batch-add/index';
+import dbCarousel from './components/carousel/index.vue';
+import dbIconSelecter from './components/icon-selecter/index.vue';
+
 export default {
     data() {
         return {
@@ -41,6 +43,14 @@ export default {
                    label:'批量添加',
                    name:'dbBatchAdd'
                },
+               {
+                   label:'轮播图',
+                   name:'dbCarousel'
+               },
+               {
+                   label:'图标选择器',
+                   name:'dbIconSelecter'
+               }
            ]
         };
     },
@@ -49,7 +59,9 @@ export default {
         dbButton,
         dbTable,
         dbMessage,
-        dbBatchAdd
+        dbBatchAdd,
+        dbCarousel,
+        dbIconSelecter
     },
     methods: {
         handleClick(tab) {

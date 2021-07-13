@@ -35,7 +35,7 @@ export default {
     iconClass() {
       return this.custom
         ? "iconfont " + this.custom
-        : "iconfont icon" + this.type;
+        : "iconfont " + this.type;
     },
     iconColor() {
       if (this.state) {
