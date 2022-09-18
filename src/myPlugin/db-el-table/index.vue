@@ -31,13 +31,15 @@
             <el-form-item>
                 <slot name="formBtn" v-bind:scope="{ formInline }">
                     <el-button :size="formSize" @click="onFormReset"
-                        >重置</el-button
+                    >重置
+                    </el-button
                     >
                     <el-button
                         :size="formSize"
                         type="primary"
                         @click="onFormSubmit"
-                        >查询</el-button
+                    >查询
+                    </el-button
                     >
                 </slot>
             </el-form-item>
@@ -45,38 +47,7 @@
         <el-table
             ref="tableRef"
             :data="tableData"
-            :height="dbTableProps.height"
-            :max-height="dbTableProps.maxHeight"
-            :stripe="dbTableProps.stripe"
-            :border="dbTableProps.border"
-            :size="dbTableProps.size"
-            :fit="dbTableProps.fit"
-            :show-header="dbTableProps.showHeader"
-            :highlight-current-row="dbTableProps.highlightCurrentRow"
-            :current-row-key="dbTableProps.currentRowKey"
-            :row-class-name="dbTableProps.rowClassnName"
-            :row-style="dbTableProps.rowStyle"
-            :cell-class-name="dbTableProps.cellClassName"
-            :cell-style="dbTableProps.cellStyle"
-            :header-row-class-name="dbTableProps.headerRowClassName"
-            :header-row-style="dbTableProps.headerRowStyle"
-            :header-cell-class-name="dbTableProps.headerCellClassName"
-            :header-cell-style="dbTableProps.headerCellStyle"
-            :row-key="dbTableProps.rowKey"
-            :empty-text="dbTableProps.emptyText"
-            :default-expand-all="dbTableProps.defaultExpandAll"
-            :expand-row-keys="dbTableProps.expandRowKeys"
-            :default-sort="dbTableProps.defaultSort"
-            :tooltip-effect="dbTableProps.tooltipEffect"
-            :show-summary="dbTableProps.showSummary"
-            :sum-text="dbTableProps.sumText"
-            :summary-method="dbTableProps.summaryMethod"
-            :span-method="dbTableProps.spanMethod"
-            :select-on-indeterminate="dbTableProps.selectOnIndeterminate"
-            :indent="dbTableProps.indent"
-            :lazy="dbTableProps.lazy"
-            :load="dbTableProps.load"
-            :tree-props="dbTableProps.treeProps"
+            v-bind="dbTableProps"
             style="width: 100%"
             @select="select"
             @select-all="selectAll"
@@ -99,33 +70,7 @@
             <el-table-column
                 v-for="(item, index) in columns"
                 :key="index"
-                :type="item.type"
-                :index="item.index"
-                :column-key="item.columnKey"
-                :label="item.label"
-                :prop="item.prop"
-                :width="item.width"
-                :min-width="item.minWidth"
-                :fixed="item.fixed"
-                :render-header="item.renderHeader"
-                :sortable="item.sortable"
-                :sort-method="item.sortMethod"
-                :sort-by="item.sortBy"
-                :sort-orders="item.sortOrders"
-                :resizable="item.resizable"
-                :formatter="item.formatter"
-                :show-overflow-tooltip="item.showOverflowTooltip"
-                :align="item.align"
-                :header-align="item.headerAlign"
-                :class-name="item.className"
-                :label-class-name="item.labelClassName"
-                :selectable="item.selectable"
-                :reserve-selection="item.reserveSelection"
-                :filters="item.filters"
-                :filter-placement="item.filterPlacement"
-                :filter-multiple="item.filterMultiple"
-                :filter-method="item.filterMethod"
-                :filtered-value="item.filteredValue"
+                v-bind="item"
             >
                 <template slot="header" slot-scope="scope">
                     <slot
@@ -135,7 +80,6 @@
                         <span>{{ item.label }}</span>
                     </slot>
                 </template>
-
                 <template slot-scope="scope">
                     <slot :name="'table-' + item.prop" v-bind:scope="scope">
                         <span>{{ scope.row[item.prop] }}</span>
@@ -148,20 +92,7 @@
         </el-table>
         <el-pagination
             :style="{ textAlign: dbPaginationProps.textAlign }"
-            :small="dbPaginationProps.small"
-            :background="dbPaginationProps.background"
-            :page-size="dbPaginationProps.pageSize"
-            :total="dbPaginationProps.total"
-            :page-count="dbPaginationProps.pageCount"
-            :pager-count="dbPaginationProps.pagerCount"
-            :current-page="dbPaginationProps.currentPage"
-            :layout="dbPaginationProps.layout"
-            :page-sizes="dbPaginationProps.pageSizes"
-            :popper-class="dbPaginationProps.popperClass"
-            :prev-text="dbPaginationProps.prevText"
-            :next-text="dbPaginationProps.nextText"
-            :disabled="dbPaginationProps.disabled"
-            :hide-on-single-page="dbPaginationProps.hideOnSinglePage"
+            v-bind="dbPaginationProps"
             @size-change="handleSizeChange"
             @current-change="pageCurrentChange"
             @prev-click="prevClick"
@@ -188,11 +119,13 @@ export default {
         },
         tableProps: {
             type: Object,
-            default: () => {},
+            default: () => {
+            },
         },
         paginationProps: {
             type: Object,
-            default: () => {},
+            default: () => {
+            },
         },
         columns: {
             type: Array,
@@ -239,7 +172,7 @@ export default {
                 sumText: "合计",
                 selectOnIndeterminate: true,
                 indent: 16,
-                treeProps: { hasChildren: "hasChildren", children: "children" },
+                treeProps: {hasChildren: "hasChildren", children: "children"},
                 // height: "",//注释掉的表示没有默认值
                 // maxHeight: "",
                 // size: "",
@@ -309,8 +242,8 @@ export default {
         headerContextmenu(column, event) {
             this.$emit("header-contextmenu", column, event);
         },
-        sortChange({ column, prop, order }) {
-            this.$emit("sort-change", { column, prop, order });
+        sortChange({column, prop, order}) {
+            this.$emit("sort-change", {column, prop, order});
         },
         filterChange(filters) {
             this.$emit("filter-change", filters);
@@ -380,20 +313,23 @@ export default {
     created() {
         this.replaceProps();
     },
-    mounted() {},
+    mounted() {
+    },
 };
-</script> 
+</script>
 
 <style lang='less' scoped>
 .db-el-table {
     .el-form-item {
         margin-bottom: 10px;
     }
+
     .el-table,
     .el-form {
         padding: 0 20px;
         box-sizing: border-box;
     }
+
     .el-pagination {
         padding: 15px 20px;
     }
