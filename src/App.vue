@@ -19,8 +19,18 @@ import dbTable from "./components/tables/index.vue";
 import dbMessage from "./components/messages/index.vue";
 import dbBatchAdd from './components/batch-add/index';
 import dbIconSelecter from './components/icon-selecter/index.vue';
+import dbTransition from './components/transition/index.vue';
 
 export default {
+    components: {
+        dbIcon,
+        dbButton,
+        dbTable,
+        dbMessage,
+        dbBatchAdd,
+        dbIconSelecter,
+        dbTransition
+    },
     data () {
         return {
             activeName: 'dbIcon',
@@ -49,18 +59,15 @@ export default {
                 {
                     label: '图标选择器',
                     name: 'dbIconSelecter'
+                },
+                {
+                    label: '动画组件',
+                    name: 'dbTransition'
                 }
             ]
         };
     },
-    components: {
-        dbIcon,
-        dbButton,
-        dbTable,
-        dbMessage,
-        dbBatchAdd,
-        dbIconSelecter
-    },
+    
     methods: {
         handleClick (tab) {
             this.componentName = tab.name
